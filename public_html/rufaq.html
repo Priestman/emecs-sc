@@ -1,0 +1,294 @@
+<!DOCTYPE HTML>
+<?php
+include "bd.php";
+?> 
+<html>
+	<head>
+		<title>EMECS'11 – SeaCoasts XXVI</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+		<script src="assets/js/ie/html5shiv.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/ie8.css" />
+		
+<style>
+#slider {
+ width: 800px;
+ color: #66666;
+ font-family: Georgia;
+ font-size: 20px;
+ }
+.header {
+ width: 800px;
+ border: 1px solid #cccccc;
+ padding: 8px;
+ margin-top: 5px;
+ cursor: pointer;
+ text-align: center;
+ }
+.header:hover {
+ color: #666666;
+ }
+.content {
+ overflow: hidden;
+ }
+.text {
+ width: 795px;
+ border: 1px solid #cccccc;
+ border-top: none;
+ padding: 15px;
+ text-align: left;
+ background: #eeeeee;
+ font-size: 16px;
+ }
+ .fig {
+ text-align: center;
+ }
+</style>
+<script type="text/javascript">
+var array = new Array();
+var speed = 10;
+var timer = 10;
+ 
+// Loop through all the divs in the slider parent div //
+// Calculate seach content divs height and set it to a variable //
+function slider(target,showfirst) {
+ var slider = document.getElementById(target);
+ var divs = slider.getElementsByTagName('div');
+ var divslength = divs.length;
+ for(i = 0; i < divslength; i++) {
+ var div = divs[i];
+ var divid = div.id;
+ if(divid.indexOf("header") != -1) {
+ div.onclick = new Function("processClick(this)");
+ } else if(divid.indexOf("content") != -1) {
+ var section = divid.replace('-content','');
+ array.push(section);
+ div.maxh = div.offsetHeight;
+ if(showfirst == 1 && i == 1) {
+ div.style.display = 'block';
+ } else {
+ div.style.display = 'none';
+ }
+ }
+ }
+}
+ 
+// Process the click - expand the selected content and collapse the others //
+function processClick(div) {
+ var catlength = array.length;
+ for(i = 0; i < catlength; i++) {
+ var section = array[i];
+ var head = document.getElementById(section + '-header');
+ var cont = section + '-content';
+ var contdiv = document.getElementById(cont);
+ clearInterval(contdiv.timer);
+ if(head == div && contdiv.style.display == 'none') {
+ contdiv.style.height = '0px';
+ contdiv.style.display = 'block';
+ initSlide(cont,1);
+ } else if(contdiv.style.display == 'block') {
+ initSlide(cont,-1);
+ }
+ }
+}
+ 
+// Setup the variables and call the slide function //
+function initSlide(id,dir) {
+ var cont = document.getElementById(id);
+ var maxh = cont.maxh;
+ cont.direction = dir;
+ cont.timer = setInterval("slide('" + id + "')", timer);
+}
+ 
+// Collapse or expand the div by incrementally changing the divs height and opacity //
+function slide(id) {
+ var cont = document.getElementById(id);
+ var maxh = cont.maxh;
+ var currheight = cont.offsetHeight;
+ var dist;
+ if(cont.direction == 1) {
+ dist = (Math.round((maxh - currheight) / speed));
+ } else {
+ dist = (Math.round(currheight / speed));
+ }
+ if(dist <= 1) {
+ dist = 1;
+ }
+ cont.style.height = currheight + (dist * cont.direction) + 'px';
+ cont.style.opacity = currheight / cont.maxh;
+ cont.style.filter = 'alpha(opacity=' + (currheight * 100 / cont.maxh) + ')';
+ if(currheight < 2 && cont.direction != 1) {
+ cont.style.display = 'none';
+ clearInterval(cont.timer);
+ } else if(currheight > (maxh - 2) && cont.direction == 1) {
+ clearInterval(cont.timer);
+ }
+}
+</script>
+	</head>
+	<body onload="slider('slider',0)">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+<header id="header">
+					<h1><a href="index.html">EMECS11 SeaCoasts XXVI</a> </h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="rudates.html">Rus</a></li>
+							<li><a href="dates.html">Eng</a></li>
+							<li><a href="ruprogram.html"><font color="red">New!</font> Программа</a></li>
+							<li>
+								<a href="#" class="icon fa-angle-down">Меню</a>
+								<ul>
+									<li><a href="ruabout.html">О конференции</a></li>
+									<li><a href="rucontact.html">Контакты</a></li>
+									<li><a href="rudates.html">Даты</a></li>
+									<li><a href="rusponsor.html">Организаторы</a></li>
+									<li><a href="ruvisa.html">Виза</a></li>
+									<li><a href="ruaboutreg.html">Рег. взнос</a></li>
+									<li><a href="ruguidelines.html">Оформление статей</a></li>
+									<li><a href="rufaq.html">Вопрос-ответ</a></li>
+									<li><a href="russp.html">Молодежная секция</a></li>
+									<li><a href="form/support.php">Техподдержка</a></li>
+									<!--<li>
+									<!-- 	<a href="#">Submenu</a>
+										<ul>
+											<li><a href="#">Option One</a></li>
+											<li><a href="#">Option Two</a></li>
+											<li><a href="#">Option Three</a></li>
+											<li><a href="#">Option Four</a></li>
+										</ul>
+									</li>-->
+								</ul>
+							</li>
+							<li><a href="index.php" class="button">Войти</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container 75%">
+					<header>
+						<h2>Вопрос-ответ</h2>
+						<p>Если вы не нашли ответ на свой вопрос, <a href="/form/support.php">напишите нам.</a></p>
+					</header>
+			
+<div id="intro">
+<p>
+<div id="slider">
+ <div class="header" id="1-header">Мне не пришло письмо-подтверждение, я не могу зарегистрироваться. Что делать?</div>
+ <div class="content" id="1-content">
+ <div class="text">
+•&nbsp; Если у вас есть почтовый ящик на таких сервисах, как google.com, mail.ru, yandex.ru или наподобие, используйте его. Использование некоторых нестандартных адресов может вызвать проблемы.<br>
+•&nbsp; Иначе напишите нам через <a href="/form/support.php">форму техподдержки</a> с темой "confirm my profile". Мы активируем ваш профиль вручную.
+ </div>
+ </div>
+ <div class="header" id="2-header">Заполнение раздела "Information"</div>
+ <div class="content" id="2-content">
+ <div class="text">
+•&nbsp; После регистрации вы будете перенаправлены на эту страницу: <br>
+<figure class="fig"><img src="images/1.png" alt="info"></figure><br>
+•&nbsp; Все поля обязательны для заполнения, все данные необходимо вносить на английском языке. Если вы не видите календарь, вводите дату рождения в следующем формате: гггг-мм-дд, как показано на рисунке ниже: <br>
+<figure class="fig"><img src="images/2.png" alt="birth"></figure><br>
+•&nbsp; Если вы не хотите заполнять раздел телефонов, например, номер мобильного, поставьте прочерк. Затем кликните "Save".<br>
+<figure class="fig"><img src="images/3.png" alt="mob"></figure><br>
+•&nbsp; После сохранения персональной информации вам будет доступна загрузка тезисов. Также вы всегда сможете отредактировать информацию профиля, если допустили ошибку. В случае успешного внесения данных на наш сервер ваш профиль будет выглядеть следующим образом: <br>
+<figure class="fig"><img src="images/13.png" alt="data"></figure><br>
+ </div>
+ </div>
+ <div class="header" id="3-header">Заполнение раздела "Abstract and paper submission"</div>
+ <div class="content" id="3-content">
+ <div class="text">
+•&nbsp; Количество добавляемых статей не ограничено. Для того, чтобы добавить еще статью, повторите описанную здесь процедуру. Все статьи, которые вы добавили, отображаются в разделе "Added papers". Требования в оформлению статьи и шаблон для заполнения можно посмотреть и загрузить <a href="ruguidelines.html">здесь</a> или в своем аккаунте, в форме загрузки статьи.<br>
+<figure class="fig"><img src="images/4.png" alt="abstract"></figure><br>
+•&nbsp; Все поля обязательны для заполнения. Обратите внимание, что количество символов в тезисе ограничено 1500. Внизу страницы, под формой тезиса, размещен счетчик, показывающий, сколько символов вы еще можете ввести.<br>
+<figure class="fig"><img src="images/5.png" alt="abstract"></figure><br>
+•&nbsp; После добавления вы будете перенаправлены на страницу со списком добавленных вами статей.<br>
+<figure class="fig"><img src="images/6.png" alt="list"></figure><br>
+•&nbsp; После того, как на ваш электронный адрес придет письмо о том, что ваш тезис принят, вы сможете загрузить полный текст статьи (в формате doc или docx). Перейдите в раздел "added papers" и выберите нужный заголовок из списка. В разделе редактирования будет пункт, как показано на рисунке.
+<figure class="fig"><img src="images/7.png" alt="list"></figure><br>
+•&nbsp; В верхней части страницы отображается информация о вашей статье. После загрузки полного текста появится "File: Uploaded". Это значит, что ваша статья успешно загружена на наш сервер. Также вы всегда можете удалить или отредактировать информацию о статье или загрузить другую статью, находясь в этом разделе.<br>
+<figure class="fig"><img src="images/8.png" alt="list"></figure><br>
+ </div>
+ </div>
+ <div class="header" id="4-header">Заполнение раздела "Coauthors"</div>
+ <div class="content" id="4-content">
+ <div class="text">
+•&nbsp; Для того, чтобы добавить соавтора, перейдите в соответствующий разде по ссылке из "Abstract and paper submission". Выберите статью из выпадающего списка, к которой вы хотите добавить соавтора. Заполните необходимые поля. <br>
+<figure class="fig"><img src="images/10.png" alt="list"></figure><br>
+•&nbsp; IПо желанию вы можете указать, каким по счету после первого автора идет данный соавтор.<br>
+<figure class="fig"><img src="images/9.png" alt="list"></figure><br>
+•&nbsp; Нажмите "add coauthor". Для того, чтобы добавить еще одного соавтора, повторите описанную процедуру. Все добавленные соавторы будут отображены в соответствующем разделе.<br>
+<figure class="fig"><img src="images/11.png" alt="list"></figure><br>
+•&nbsp; Для того, чтобы удалить или отредактировать информацию о соавторе, кликните по его имени в списке.<br>
+<figure class="fig"><img src="images/12.png" alt="coauthor"></figure><br>
+ </div>
+ </div>
+</div>
+</p>
+</div>
+						
+
+					
+					<!-- <div class="box">
+						<form method="post" action="#">
+							<div class="row uniform 50%">
+								<div class="6u 12u(mobilep)">
+									<input type="text" name="name" id="name" value="" placeholder="Name" />
+								</div>
+								<div class="6u 12u(mobilep)">
+									<input type="email" name="email" id="email" value="" placeholder="Email" />
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="text" name="subject" id="subject" value="" placeholder="Subject" />
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+								</div>
+							</div>
+							<div class="row uniform">
+								<div class="12u">
+									<ul class="actions align-center">
+										<li><input type="submit" value="Send Message" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div> -->
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<!-- <ul class="icons">
+						<li><a href="https://twitter.com" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="https://instagram.com/" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://dribbble.com/" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul> -->
+					<ul class="copyright">
+						<li>&copy; All rights reserved.</li><li><a href="http://rshu.ru">RSHU</a></li><li>Created by Alice Popova</li>
+						<li><a href="form/support.php">Technical support</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

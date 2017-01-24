@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<?php
+include "bd.php";
+?> 
+<html>
+	<head>
+		<title>EMECS'11 – SeaCoasts XXVI</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+		<script src="assets/js/ie/html5shiv.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/ie8.css" />
+		
+<style>
+#slider {
+ width: 800px;
+ color: #66666;
+ font-family: Georgia;
+ font-size: 20px;
+ }
+.header {
+ width: 800px;
+ border: 1px solid #cccccc;
+ padding: 8px;
+ margin-top: 5px;
+ cursor: pointer;
+ text-align: center;
+ }
+.header:hover {
+ color: #666666;
+ }
+.content {
+ overflow: hidden;
+ }
+.text {
+ width: 795px;
+ border: 1px solid #cccccc;
+ border-top: none;
+ padding: 15px;
+ text-align: left;
+ background: #eeeeee;
+ font-size: 16px;
+ }
+ .fig {
+ text-align: center;
+ }
+</style>
+<script type="text/javascript">
+var array = new Array();
+var speed = 10;
+var timer = 10;
+ 
+// Loop through all the divs in the slider parent div //
+// Calculate seach content divs height and set it to a variable //
+function slider(target,showfirst) {
+ var slider = document.getElementById(target);
+ var divs = slider.getElementsByTagName('div');
+ var divslength = divs.length;
+ for(i = 0; i < divslength; i++) {
+ var div = divs[i];
+ var divid = div.id;
+ if(divid.indexOf("header") != -1) {
+ div.onclick = new Function("processClick(this)");
+ } else if(divid.indexOf("content") != -1) {
+ var section = divid.replace('-content','');
+ array.push(section);
+ div.maxh = div.offsetHeight;
+ if(showfirst == 1 && i == 1) {
+ div.style.display = 'block';
+ } else {
+ div.style.display = 'none';
+ }
+ }
+ }
+}
+ 
+// Process the click - expand the selected content and collapse the others //
+function processClick(div) {
+ var catlength = array.length;
+ for(i = 0; i < catlength; i++) {
+ var section = array[i];
+ var head = document.getElementById(section + '-header');
+ var cont = section + '-content';
+ var contdiv = document.getElementById(cont);
+ clearInterval(contdiv.timer);
+ if(head == div && contdiv.style.display == 'none') {
+ contdiv.style.height = '0px';
+ contdiv.style.display = 'block';
+ initSlide(cont,1);
+ } else if(contdiv.style.display == 'block') {
+ initSlide(cont,-1);
+ }
+ }
+}
+ 
+// Setup the variables and call the slide function //
+function initSlide(id,dir) {
+ var cont = document.getElementById(id);
+ var maxh = cont.maxh;
+ cont.direction = dir;
+ cont.timer = setInterval("slide('" + id + "')", timer);
+}
+ 
+// Collapse or expand the div by incrementally changing the divs height and opacity //
+function slide(id) {
+ var cont = document.getElementById(id);
+ var maxh = cont.maxh;
+ var currheight = cont.offsetHeight;
+ var dist;
+ if(cont.direction == 1) {
+ dist = (Math.round((maxh - currheight) / speed));
+ } else {
+ dist = (Math.round(currheight / speed));
+ }
+ if(dist <= 1) {
+ dist = 1;
+ }
+ cont.style.height = currheight + (dist * cont.direction) + 'px';
+ cont.style.opacity = currheight / cont.maxh;
+ cont.style.filter = 'alpha(opacity=' + (currheight * 100 / cont.maxh) + ')';
+ if(currheight < 2 && cont.direction != 1) {
+ cont.style.display = 'none';
+ clearInterval(cont.timer);
+ } else if(currheight > (maxh - 2) && cont.direction == 1) {
+ clearInterval(cont.timer);
+ }
+}
+</script>
+	</head>
+	<body onload="slider('slider',0)">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1><a href="index.html">EMECS11 SeaCoasts XXVI</a> </h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="rufaq.html">Rus</a></li>
+							<li><a href="faq.html">Eng</a></li>
+							<li><a href="program.html"><font color="red">New!</font> PROGRAMME</a></li>s
+							<li>
+								<a href="#" class="icon fa-angle-down">Menu</a>
+								<ul>
+									<li><a href="about.html">About</a></li>
+									<li><a href="contact.html">Contacts</a></li>
+									<li><a href="dates.html">Dates</a></li>
+									<li><a href="sponsor.html">Organizers</a></li>
+									<li><a href="visa.html">Visa</a></li>
+									<li><a href="aboutreg.html">Registration</a></li>
+									<li><a href="guidelines.html">Paper guidelines</a></li>
+									<li><a href="faq.html">FAQ</a></li>
+									<li><a href="ssp.html">SSP Meeting</a></li>
+									<li><a href="form/support.php">Technical support</a></li>
+
+								</ul>
+							</li>
+							<li><a href="index.php" class="button">Sign In</a></li>
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Main -->
+				<section id="main" class="container 75%">
+					<header>
+						<h2>FAQ</h2>
+						<p>If you don't find the answer to your question, <a href="/form/support.php">email us.</a></p>
+					</header>
+			
+<div id="intro">
+<p>
+<div id="slider">
+ <div class="header" id="1-header">I have not received a confirmation e-mail for my profile. What should I do?</div>
+ <div class="content" id="1-content">
+ <div class="text">
+•&nbsp; If you have an email address at the services as google.com, mail.ru, yandex.ru or other public service, please use it for registration. Using national email services could cause problems.<br>
+•&nbsp; Otherwise, please contact us using the <a href="/form/support.php">support form</a> with the subject "confirm my profile". We will confirm your profile manually.
+ </div>
+ </div>
+
+ <div class="header" id="5-header">Does the Conference have any funding/grants available for students from developing countries?</div>
+ <div class="content" id="5-content">
+ <div class="text">
+•&nbsp; No, we do not have this possibility.
+ </div>
+ </div>
+
+ <div class="header" id="6-header">I need an official invitation. How can I get it?</div>
+ <div class="content" id="6-content">
+ 	<div class="text">
+ •&nbsp; You can contact us at <a href="/form/support.php">techsupport</a> with the subject <b>"official invitation"</b> or write to Alexandra Ershova, Technical and Scientific Secretary of the Conference.		
+ 	</div>
+ </div>
+
+ <div class="header" id="2-header">Filling in the section "Information"</div>
+ <div class="content" id="2-content">
+ <div class="text">
+•&nbsp; By registering on the site, you will be redirected to this page: <br>
+<figure class="fig"><img src="images/1.png" alt="info"></figure><br>
+•&nbsp; All fields are required. If your browser does not display the calendar, the date of birth entered in the format yyyy-mm-dd, as shown in the figure below: <br>
+<figure class="fig"><img src="images/2.png" alt="birth"></figure><br>
+•&nbsp; If you want to skip any field, such as a mobile phone, enter a dash. Then click save.<br>
+<figure class="fig"><img src="images/3.png" alt="mob"></figure><br>
+•&nbsp; After saving your personal information it will be possible to upload abstracts. You can always edit the entered data, if you make a mistake. After you save the information your account will look something like this: <br>
+<figure class="fig"><img src="images/13.png" alt="data"></figure><br>
+ </div>
+ </div>
+ <div class="header" id="3-header">Filling in the section "Abstract and paper submission"</div>
+ <div class="content" id="3-content">
+ <div class="text">
+•&nbsp; The amount of added articles is not limited. Every time, wanting to add an abstract, you must fill in this form. Everything that you add will appear under "Added papers". Paper guidelines and the template can be viewed and downloaded <a href="ruguidelines.html">here</a> or in a personal account in the upload form;<br>
+<figure class="fig"><img src="images/4.png" alt="abstract"></figure><br>
+•&nbsp; All fields are required. Please note that the number of characters in the abstract is limited to 1500. The bottom of the page counter shows how many characters you can enter.<br>
+<figure class="fig"><img src="images/5.png" alt="abstract"></figure><br>
+•&nbsp; After adding the abstract you will be redirected to the page of your papers.<br>
+<figure class="fig"><img src="images/6.png" alt="list"></figure><br>
+•&nbsp; After you receive a confirmation letter that your abstract is accepted, you can add the full text of the paper (format doc or docx). Go to the "added papers" and select from the list. Edit page will have the paragraph, as shown in the figure.
+<figure class="fig"><img src="images/7.png" alt="list"></figure><br>
+•&nbsp; At the top of the page all information about your paper is displayed. After you uploaded the full text you will see "File: Uploaded". This means that your paper has been successfully added to our server. You can also delete the paper by clicking on the button at the bottom of this page.<br>
+<figure class="fig"><img src="images/8.png" alt="list"></figure><br>
+ </div>
+ </div>
+ <div class="header" id="4-header">Filling in the section "Coauthors"</div>
+ <div class="content" id="4-content">
+ <div class="text">
+•&nbsp; To add co-authors click on the link in the section "Abstract and paper submission". Select the paper title from the drop-down list to which you want to add a co-author. The filling of the fields are optional. <br>
+<figure class="fig"><img src="images/10.png" alt="list"></figure><br>
+•&nbsp; If you want, you can specify a number in the order after the first author.<br>
+<figure class="fig"><img src="images/9.png" alt="list"></figure><br>
+•&nbsp; Click "add coauthor". To add another co-author, repeat this procedure. All added coauthors will appear in the same-name list.<br>
+<figure class="fig"><img src="images/11.png" alt="list"></figure><br>
+•&nbsp; Clicking on the name of coauthor, you will be redirected to the edit section, where you can change information about or delete.<br>
+<figure class="fig"><img src="images/12.png" alt="coauthor"></figure><br>
+ </div>
+ </div>
+</div>
+</p>
+</div>
+						
+
+					
+					<!-- <div class="box">
+						<form method="post" action="#">
+							<div class="row uniform 50%">
+								<div class="6u 12u(mobilep)">
+									<input type="text" name="name" id="name" value="" placeholder="Name" />
+								</div>
+								<div class="6u 12u(mobilep)">
+									<input type="email" name="email" id="email" value="" placeholder="Email" />
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<input type="text" name="subject" id="subject" value="" placeholder="Subject" />
+								</div>
+							</div>
+							<div class="row uniform 50%">
+								<div class="12u">
+									<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+								</div>
+							</div>
+							<div class="row uniform">
+								<div class="12u">
+									<ul class="actions align-center">
+										<li><input type="submit" value="Send Message" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
+					</div> -->
+				</section>
+
+			<!-- Footer -->
+				<footer id="footer">
+					<!-- <ul class="icons">
+						<li><a href="https://twitter.com" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+						<li><a href="https://instagram.com/" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/" class="icon fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://dribbble.com/" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
+					</ul> -->
+					<ul class="copyright">
+						<li>&copy; All rights reserved.</li><li><a href="http://rshu.ru">RSHU</a></li><li>Created by Alice Popova</li>
+						<li><a href="form/support.php">Technical support</a></li>
+					</ul>
+				</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollgress.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/ie/respond.min.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
